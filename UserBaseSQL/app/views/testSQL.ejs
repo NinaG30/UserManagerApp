@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <% display_results.forEach(function (result) { %>
+        <div>
+            <%= result.id_t1 %> &nbsp;&nbsp; <%= result.field1 %>
+        </div>
+
+        <% }) %>
+
+            <% more_infos.forEach(function (result) { %>
+                <div>
+                    <%= result %>
+                </div>
+
+                <% }) %>
+
+                    <form method="POST" action="/tabOne/create">
+                        <input type="text" name="field1" value="vol">
+                        <button>Créer</button>
+                    </form>
+
+                    <form method="POST" action="">
+                        <select id="tab1_select">
+                        </select>
+                        <button id="btn_del">Delete</button>
+                    </form>
+
+                    
+                    <form method="POST" action="">
+                        <select id="tab1_update"></select>
+                        <input type="text" id="input_value" name="input">
+                        <button id="btn_update">Update</button>
+                    </form>
+
+                    <script>
+                        window.addEventListener('load', function () {
+                            let tabselect = document.getElementById('tab1_select');
+                            let tabUpdate = document.getElementById('tab1_update');
+
+                            //fetch permet d'obtenir le result de la methode app.get('/tabOne/getRecords', etc)
+                            fetch('/tabOne/getRecords')
+                                .then(res => res.text())
+                                .then(res => {
+                              
+                                    myresults = JSON.parse(res)
+                                    myresults.forEach((item) => {
+                                        let opt = document.createElement('option');
+                                        opt.value = item.id_t1;
+                                        opt.text = item.field1;
+                                        tabselect.add(opt);                                  
+                                    })
+                                    myresults.forEach((item) => {
+                                        let opt = document.createElement('option');
+                                        opt.value = item.id_t1;
+                                        opt.text = item.field1;
+                                        tabUpdate.add(opt);                                  
+                                    })
+                                })
+                        })
+
+                        btn_del.addEventListener('click', function (evt) {
+                            evt.preventDefault();
+                            document.location.href = '/tabOne/delete/' + tab1_select.value;
+                        })
+
+                        btn_update.addEventListener('click', function (evt) {
+                            evt.preventDefault();
+                            document.location.href = '/tabOne/update/' + tab1_update.value + "/" + input_value.value;
+                        })
+                    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body {
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgb(43, 43, 43);
+        }
+
+        .flex {
+            width: 400px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .red {
+
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 5px;
+
+
+        }
+
+        .green {
+            width: 47.5%;
+            display: flex;
+            margin: 5px;
+
+        }
+
+        .btn {
+            width: 200px;
+            padding: 10px;
+            border: none;
+            background: rgb(113, 42, 42);
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+    <div class="flex">
+        <div class="red"><button type="submit" class='btn' id="up">Up</button></div>
+        <div class="green"><button type="submit" class='btn' id="left">Left</button></div>
+        <div class="green"><button type="submit" class='btn' id="right">Right</button></div>
+        <div class="red"><button type="submit" class='btn' id="down">Down</button></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+         
+        let socket = io();
+        down.addEventListener('click', function (e) {
+            e.preventDefault();            
+            socket.emit('down', 'bas' );
+        })
+
+        left.addEventListener('click', function (e) {
+            e.preventDefault();            
+            socket.emit('left', 'gauche' );
+        })
+
+        right.addEventListener('click', function (e) {
+            e.preventDefault();            
+            socket.emit('right', 'droite' );
+        })
+
+        up.addEventListener('click', function (e) {
+            e.preventDefault();            
+            socket.emit('up', 'haut' );
+        })
+
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon petit robot</title>
+</head>
+
+<body>
+
+    <img src="robot1.png" id="imgRobot" style="width:100px;margin-top:5px;margin-left:50px;" />
+    <div>
+
+    </div>
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        let speed = 10;
+        let posX = 1;
+        let posY = 1;
+        let imgRobot = document.getElementById('imgRobot');
+
+        socket.on('down', function (msg) {
+            console.log(msg);
+            posY += speed;
+            imgRobot.style.marginTop = posY + "px"; //revoir l'instruction
+        })
+
+        socket.on('right', function (msg) {
+            console.log(msg);
+            posX -= speed;
+            imgRobot.style.marginLeft = posX + "px"; //revoir l'instruction
+        })
+      
+        socket.on('left', function (msg) {
+            console.log(msg);
+            posX += speed;
+            imgRobot.style.marginLeft = posX + "px"; //revoir l'instruction
+        })
+
+        socket.on('up', function (msg) {
+            console.log(msg);
+            posY -= speed;
+            imgRobot.style.marginTop = posY + "px"; //revoir l'instruction
+        })
+    </script>
+</body>
+
+</html>

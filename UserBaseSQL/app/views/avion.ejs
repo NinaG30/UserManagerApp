@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <% title %>
+    </title>
+</head>
+
+<body>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            color: rgb(248, 207, 93);
+            background-color: black;
+        }
+
+        table,
+        th,
+        tr,
+        td {
+            border-collapse: collapse;
+            border: 1px solid red;
+            padding: 4px 6px;
+            text-align: center;
+        }
+
+        table {
+            margin: 10px auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        a {
+            color: white;
+        }
+
+        a:hover {
+            color: red;
+            cursor: pointer;
+        }
+
+        .flex {
+            width: 100%;
+            display: flex;
+            height: 100vh;
+        }
+
+        #liste {
+            width: 70%;
+           
+
+        }
+
+        aside {
+            width: 30%;
+            background: rgb(107, 20, 20);
+
+        }
+
+        #det_text {
+            padding:5px;
+        }
+    </style>
+     
+    <div class="flex">
+        <div id="liste">
+            <h1>LISTE DES VOLS</h1>
+            <a href="/create">Aller à la création</a>
+            <table>
+                <tr>
+                    <th>id_vol</th>
+                    <th>DEP</th>
+                    <th>ARR</th>
+                    <th>Horaire</th>
+                    <th>Places</th>
+                    <th>Avions</th>
+                    <th>Pilotes</th>
+                </tr>
+                <% display_results.forEach(function(item) { %>
+                    <tr>
+                        <td>
+                            <%= item.id_vol %></a>
+                        </td>
+                        <td>
+                            <%= item.villeDep %>
+                        </td>
+                        <td>
+                            <%= item.villeArr %>
+                        </td>
+                        <td>
+                            <%= item.horaire %>
+                        </td>
+                        <td>
+                            <%= item.nbre_pass %>
+                        </td>
+                        <td><a id="<%= item.id_avion %>" class="avionLink">
+                                <%= item.type %>
+                            </a>
+                        </td>
+                        <td><a id="<%= item.id_pilote %>" class="pilotLink">
+                                <%= item.nom %>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <% }) %>
+            </table>
+        </div>
+
+        <aside>
+            <h1>DETAIL DU VOL</h1>
+            <div id="det_text"></div>
+        </aside>
+    </div>
+    <script>
+        // on doit faire la requete suivante :
+        // SELECT * FROM pilote WHERE id pilot=??
+        let pilotList = document.querySelectorAll('.pilotLink');
+        pilotList.forEach(element => {
+            element.addEventListener('click', function () {
+                console.log(this.id);
+                fetch("/pilote/" + this.id)
+                    //change en texte
+                    .then(res => res.text())
+                    .then(res => {
+                        mydisplay = JSON.parse(res)
+                        det_text.innerHTML =  "Salaire : " + mydisplay[0].salaire +
+                         "<br>Adresse : " + mydisplay[0].adresse +
+                         "<br>Qualification : " + mydisplay[0].qualification  
+                    });
+            })
+        })
+
+        let avionList = document.querySelectorAll('.avionLink');
+        avionList.forEach(element => {
+            element.addEventListener('click', function () {
+                // console.log(this.id);
+                fetch("/type/" + this.id)
+                    //change en texte
+                    .then(res => res.text())
+                    
+                    .then(res => {
+                        // console.log(res);
+                        mydisplay = JSON.parse(res)
+                        det_text.innerHTML = "Type d'avion : " + mydisplay[0].type +
+                         "<br>Capacité : " + mydisplay[0].capacite +
+                         "<br>Rayon d'action : " + mydisplay[0].rayon_action +
+                         "<br>Constructeur : " + mydisplay[0].constructeur 
+                    });
+            })
+        })
+    </script>
+</body>
+
+</html>

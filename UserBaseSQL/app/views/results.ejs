@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% title %></title>
+</head>
+<body>
+    <style>
+        html {color: lightgreen;background-color: black;}
+        table,th,tr,td {border-collapse: collapse; border: 1px solid red; padding: 4px 6px; text-align: center;}
+        a {color:white;}
+    </style>
+    <%- include('header'); -%>
+   <table>
+    <tr>
+        <th>ID</th>
+        <th>Serv Name</th>
+        <th>IP add</th>
+        <th>Location</th>
+        <th>Service URL</th>
+        <th>PWD</th>
+    </tr>
+    <!-- display result est un array . Obligation de faire la boucle sinon pas d'affichage correct -->
+    <% display_results.forEach(function(item) { %>
+        <tr>
+            <td><%= item.id_tech %></a></td>
+            <td><a href="detail/<%= item.id_tech %>"><%= item.serverName %></a></td>
+            <td><%= item.IPadr %></td>
+            <td><%= item.Location %></td>
+            <td><%= item.URLServiceName %></td>
+            <td><%= item.MainPassword %></td>
+        </tr>
+
+
+   <% }) %>
+   </table>
+   
+   <%- include('footer'); -%>
+</body>
+</html>
